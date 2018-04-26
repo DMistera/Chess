@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pawn.h"
+#include "King.h"
 #include "SFML\Graphics.hpp"
 #include "Player.h"
 #include "HumanPlayer.h"
@@ -19,7 +20,7 @@ private:
 	RenderWindow* m_renderWindow;
 	Player* m_black;
 	Player* m_white;
-	std::list<Piece*>* m_pieces;
+	std::list<Piece*> m_pieces;
 	Player* m_currentPlayer;
 };
 

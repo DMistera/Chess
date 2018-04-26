@@ -3,14 +3,14 @@
 HumanPlayer::HumanPlayer(Side white, RenderWindow* renderWindow) : Player(white){
 	m_renderWindow = renderWindow;
 	m_clicked = false;
-	m_availableMovesShapes = std::list<CircleShape*>();
+	m_availableMovesShapes = std::list<Shape*>();
 }
 
 HumanPlayer::~HumanPlayer() {
 }
 
-bool HumanPlayer::move(std::list<Piece*>* pieces) {
-	bool result = false;
+Move* HumanPlayer::requestMove(std::list<Piece*> pieces) {
+	Move* result = 0;
 	//Is mouse is not pressed, do not do anything
 	if (!Mouse::isButtonPressed(Mouse::Button::Left)) {
 		m_clicked = false;
@@ -21,7 +21,7 @@ bool HumanPlayer::move(std::list<Piece*>* pieces) {
 		bool selected = false;
 		Vector2i mousePosition = Mouse::getPosition(*m_renderWindow);
 		Field field = coordToField(mousePosition);
-		for (std::list<Piece*>::iterator it = pieces->begin(); it != pieces->end(); ++it) {
+		for (std::list<Piece*>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
 			if ((*it)->getSide() == m_side) {
 				Field f = (*it)->getField();
 				if (f.x == field.x && f.y == field.y) {
@@ -36,19 +36,29 @@ bool HumanPlayer::move(std::list<Piece*>* pieces) {
 			m_availableMovesShapes.clear();
 			if (m_availableMoves.size() != 0) {
 				for (std::list<Field>::iterator it = m_availableMoves.begin(); it != m_availableMoves.end(); ++it) {
-					CircleShape* shape = new CircleShape();
-					shape->setFillColor(Color(100, 100, 100, 100));
-					shape->setRadius(5);
-					shape->setPosition(fieldToCoord((*it)) + Vector2f(Piece::PIECE_SIZE / 2 - shape->getRadius(), Piece::PIECE_SIZE / 2 - shape->getRadius()));
-					m_availableMovesShapes.push_back(shape);
+					if (!Piece::occupied(pieces, (*it))) {
+						CircleShape* shape = new CircleShape();
+						shape->setFillColor(Color(100, 100, 100, 100));
+						shape->setRadius(5);
+						shape->setPosition(fieldToCoord((*it)) + Vector2f(Piece::PIECE_SIZE / 2 - shape->getRadius(), Piece::PIECE_SIZE / 2 - shape->getRadius()));
+						m_availableMovesShapes.push_back(shape);
+					}
+					else {
+						RectangleShape* shape = new RectangleShape();
+						shape->setFillColor(Color(0, 0, 0, 0));
+						shape->setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
+						shape->setOutlineColor(Color(100, 100, 100, 100));
+						shape->setOutlineThickness(5.0f);
+						shape->setPosition(fieldToCoord((*it)));
+						m_availableMovesShapes.push_back(shape);
+					}
 				}
 			}
 		}
 		else {
 			for (std::list<Field>::iterator it = m_availableMoves.begin(); it != m_availableMoves.end(); ++it) {
 				if ((*it).x == field.x && (*it).y == field.y) {
-					makeMove(m_selectedPiece, (*it));
-					result = true;
+					result = new Move(m_selectedPiece, (*it));
 					break;
 				}
 			}
@@ -72,7 +82,7 @@ void HumanPlayer::draw() {
 		m_selectedPieceShape->setPosition(fieldToCoord(m_selectedPiece->getField()));
 		m_renderWindow->draw(*m_selectedPieceShape);
 		if (m_availableMoves.size() != 0) {
-			for (std::list<CircleShape*>::iterator it = m_availableMovesShapes.begin(); it != m_availableMovesShapes.end(); ++it) {
+			for (std::list<Shape*>::iterator it = m_availableMovesShapes.begin(); it != m_availableMovesShapes.end(); ++it) {
 				m_renderWindow->draw(**it);
 			}
 		}

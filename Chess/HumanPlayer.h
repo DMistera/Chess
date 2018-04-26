@@ -12,7 +12,7 @@ public:
 	~HumanPlayer();
 
 	// Inherited via Player
-	virtual bool move(std::list<Piece*>* pieces) override;
+	virtual Move* requestMove(std::list<Piece*> pieces) override;
 	void draw();
 
 private:
@@ -25,6 +25,6 @@ private:
 
 	//Drawable
 	CircleShape* m_selectedPieceShape;
-	std::list<CircleShape*> m_availableMovesShapes;
+	std::list<Shape*> m_availableMovesShapes;
 };
 

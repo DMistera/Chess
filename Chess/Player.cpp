@@ -8,7 +8,3 @@ Player::Player(Side white) {
 
 Player::~Player() {
 }
-
-void Player::makeMove(Piece * piece, Field field) {
-	piece->setField(field);
-}

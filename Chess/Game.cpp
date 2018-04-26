@@ -6,25 +6,37 @@ Game::Game(RenderWindow * renderwindow) {
 	m_white = new HumanPlayer(Side::WHITE, m_renderWindow);
 	m_black = new HumanPlayer(Side::BLACK, m_renderWindow);
 	m_currentPlayer = m_white;
-	m_pieces = new std::list<Piece*>();
+	m_pieces = std::list<Piece*>();
 
 	//Set up a starting board
+	//Pawns
 	for (int i = 0; i < 8; i++) {
 		Pawn* whitePawn = new Pawn(Side::WHITE);
 		whitePawn->initializeSprite();
 		whitePawn->setField(Field(i, 1));
-		m_pieces->push_back(whitePawn);
+		m_pieces.push_back(whitePawn);
 
 		Pawn* blackPawn = new Pawn(Side::BLACK);
 		blackPawn->initializeSprite();
 		blackPawn->setField(Field(i, 6));
-		m_pieces->push_back(blackPawn);
+		m_pieces.push_back(blackPawn);
+	}
+
+	//Kings
+	for (int i = 0; i < 2; i++) {
+		int y = i == 0 ? 0 : 7;
+		Side side = i == 0 ? Side::WHITE : Side::BLACK;
+		King* king = new King(side);
+		king->initializeSprite();
+		king->setField(Field(4, y));
+		m_pieces.push_back(king);
 	}
 }
 
 void Game::update() {
-	bool finished = m_currentPlayer->move(m_pieces);
-	if (finished) {
+	Move* move = m_currentPlayer->requestMove(m_pieces);
+	if (move != nullptr) {
+		move->execute(&m_pieces);
 		if (m_currentPlayer == m_white) {
 			m_currentPlayer = m_black;
 		}
@@ -40,6 +52,7 @@ inline bool instanceof(const T *ptr) {
 }
 
 void Game::draw() {
+
 	//Draw chessboard
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
@@ -65,7 +78,7 @@ void Game::draw() {
 
 	//Draw pieces
 	std::list<Piece*>::iterator it;
-	for (it = m_pieces->begin(); it != m_pieces->end(); ++it) {
+	for (it = m_pieces.begin(); it != m_pieces.end(); ++it) {
 		Sprite* sprite = (*it)->getSprite();
 		sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7-(*it)->getField().y)*Piece::PIECE_SIZE);
 		m_renderWindow->draw(*sprite);

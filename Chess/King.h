@@ -1,11 +1,12 @@
 #pragma once
-
 #include "Piece.h"
+#include <list>
 
-class Pawn : public Piece {
+class King :
+	public Piece {
 public:
-	Pawn(Side side);
-	~Pawn();
+	King(Side);
+	~King();
 
 	// Inherited via Piece
 	virtual std::string getImage() override;
