@@ -7,6 +7,7 @@ Game::Game(RenderWindow * renderwindow) {
 	m_black = new HumanPlayer(Side::BLACK, m_renderWindow);
 	m_currentPlayer = m_white;
 	m_pieces = std::list<Piece*>();
+	m_animationState = false;
 
 	//Set up a starting board
 	//Pawns
@@ -33,15 +34,28 @@ Game::Game(RenderWindow * renderwindow) {
 	}
 }
 
-void Game::update() {
-	Move* move = m_currentPlayer->requestMove(m_pieces);
-	if (move != nullptr) {
-		move->execute(&m_pieces);
-		if (m_currentPlayer == m_white) {
-			m_currentPlayer = m_black;
+void Game::update(double deltaTime) {
+	if (!m_animationState) {
+		Move* move = m_currentPlayer->requestMove(m_pieces);
+		if (move != nullptr) {
+			Vector2f startPosition = FieldUtils::fieldToCoord(move->getPiece()->getField());
+			move->execute(&m_pieces);
+			Vector2f endPosition = FieldUtils::fieldToCoord(move->getPiece()->getField());
+			Sprite* s = move->getPiece()->getSprite();
+			m_animation = new Animation(s, startPosition, endPosition);
+			m_animationState = true;
+			if (m_currentPlayer == m_white) {
+				m_currentPlayer = m_black;
+			}
+			else {
+				m_currentPlayer = m_white;
+			}
 		}
-		else {
-			m_currentPlayer = m_white;
+	}
+	else {
+		m_animation->update(deltaTime);
+		if (m_animation->hasFinished()) {
+			m_animationState = false;
 		}
 	}
 }
@@ -80,7 +94,9 @@ void Game::draw() {
 	std::list<Piece*>::iterator it;
 	for (it = m_pieces.begin(); it != m_pieces.end(); ++it) {
 		Sprite* sprite = (*it)->getSprite();
-		sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7-(*it)->getField().y)*Piece::PIECE_SIZE);
+		if (!m_animationState) {
+			sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7 - (*it)->getField().y)*Piece::PIECE_SIZE);
+		}
 		m_renderWindow->draw(*sprite);
 	}
 }
@@ -88,3 +104,4 @@ void Game::draw() {
 bool Game::checkmate() {
 	return false;
 }
+

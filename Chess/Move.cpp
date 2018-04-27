@@ -18,3 +18,7 @@ void Move::execute(std::list<Piece*>* pieces) {
 	}
 	m_piece->setField(m_field);
 }
+
+Piece * Move::getPiece() {
+	return m_piece;
+}

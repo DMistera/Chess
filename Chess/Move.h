@@ -9,6 +9,7 @@ public:
 	Move(Piece* piece, Field field);
 	~Move();
 	void execute(std::list<Piece*>* pieces);
+	Piece* getPiece();
 private:
 	Piece * m_piece;
 	Field m_field;

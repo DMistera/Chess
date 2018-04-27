@@ -20,7 +20,7 @@ Move* HumanPlayer::requestMove(std::list<Piece*> pieces) {
 		m_clicked = true;
 		bool selected = false;
 		Vector2i mousePosition = Mouse::getPosition(*m_renderWindow);
-		Field field = coordToField(mousePosition);
+		Field field = FieldUtils::coordToField(mousePosition);
 		for (std::list<Piece*>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
 			if ((*it)->getSide() == m_side) {
 				Field f = (*it)->getField();
@@ -40,7 +40,7 @@ Move* HumanPlayer::requestMove(std::list<Piece*> pieces) {
 						CircleShape* shape = new CircleShape();
 						shape->setFillColor(Color(100, 100, 100, 100));
 						shape->setRadius(5);
-						shape->setPosition(fieldToCoord((*it)) + Vector2f(Piece::PIECE_SIZE / 2 - shape->getRadius(), Piece::PIECE_SIZE / 2 - shape->getRadius()));
+						shape->setPosition(FieldUtils::fieldToCoord((*it)) + Vector2f(Piece::PIECE_SIZE / 2 - shape->getRadius(), Piece::PIECE_SIZE / 2 - shape->getRadius()));
 						m_availableMovesShapes.push_back(shape);
 					}
 					else {
@@ -49,7 +49,7 @@ Move* HumanPlayer::requestMove(std::list<Piece*> pieces) {
 						shape->setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
 						shape->setOutlineColor(Color(100, 100, 100, 100));
 						shape->setOutlineThickness(5.0f);
-						shape->setPosition(fieldToCoord((*it)));
+						shape->setPosition(FieldUtils::fieldToCoord((*it)));
 						m_availableMovesShapes.push_back(shape);
 					}
 				}
@@ -79,7 +79,7 @@ void HumanPlayer::draw() {
 		m_selectedPieceShape->setFillColor(Color(100, 100, 100, 100));
 	}
 	if (m_selectedPieceShape != 0) {
-		m_selectedPieceShape->setPosition(fieldToCoord(m_selectedPiece->getField()));
+		m_selectedPieceShape->setPosition(FieldUtils::fieldToCoord(m_selectedPiece->getField()));
 		m_renderWindow->draw(*m_selectedPieceShape);
 		if (m_availableMoves.size() != 0) {
 			for (std::list<Shape*>::iterator it = m_availableMovesShapes.begin(); it != m_availableMovesShapes.end(); ++it) {
@@ -87,17 +87,4 @@ void HumanPlayer::draw() {
 			}
 		}
 	}
-}
-
-Field HumanPlayer::coordToField(Vector2i coords) {
-	int x = coords.x / Piece::PIECE_SIZE;
-	int y = coords.y / Piece::PIECE_SIZE;
-	y = 7 - y;
-	return Field(x, y);
-}
-
-Vector2f HumanPlayer::fieldToCoord(Field field) {
-	float x = field.x*Piece::PIECE_SIZE;
-	float y = (7 - field.y)*Piece::PIECE_SIZE;
-	return Vector2f(x, y);
 }
