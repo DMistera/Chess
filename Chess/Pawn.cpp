@@ -1,4 +1,5 @@
 #include "Pawn.h"
+#include "GameState.h"
 
 Pawn::Pawn(Side side) : Piece(side) {
 }
@@ -10,7 +11,7 @@ std::string Pawn::getImage() {
 	return m_side == Side::WHITE ? "assets/whitePawn.png" : "assets/blackPawn.png";
 }
 
-std::list<Field> Pawn::getAvailableFields(std::list<Piece*> pieces) {
+std::list<Field> Pawn::getAvailableFields(GameState* state) {
 	std::list<Field> fields;
 	Field forward1;
 	bool f1 = false;
@@ -27,7 +28,7 @@ std::list<Field> Pawn::getAvailableFields(std::list<Piece*> pieces) {
 			for (int i = 0; i < 2; i++) {
 				int x = i == 0 ? m_field.x + 1 : m_field.x - 1;
 				Field f = Field(x, m_field.y + 1);
-				if (occupied(pieces, f)) {
+				if (state->occupied(f)) {
 					fields.push_back(f);
 				}
 			}
@@ -44,16 +45,16 @@ std::list<Field> Pawn::getAvailableFields(std::list<Piece*> pieces) {
 			for (int i = 0; i < 2; i++) {
 				int x = i == 0 ? m_field.x + 1 : m_field.x - 1;
 				Field f = Field(x, m_field.y - 1);
-				if (occupied(pieces, f)) {
+				if (state->occupied(f)) {
 					fields.push_back(f);
 				}
 			}
 		}
 	}
-	if (f1 && !occupied(pieces, forward1)) {
+	if (f1 && !state->occupied(forward1)) {
 		fields.push_back(forward1);
 	}
-	if (f2 && !occupied(pieces, forward1) && !occupied(pieces, forward2)) {
+	if (f2 && !state->occupied(forward1) && !state->occupied(forward2)) {
 		fields.push_back(forward2);
 	}
 	return fields;

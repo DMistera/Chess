@@ -9,6 +9,6 @@ public:
 
 	// Inherited via Piece
 	virtual std::string getImage() override;
-	virtual std::list<Field> getAvailableFields(std::list<Piece*> pieces) override;
+	virtual std::list<Field> getAvailableFields(GameState* state) override;
 };
 

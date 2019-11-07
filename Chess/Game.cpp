@@ -1,41 +1,36 @@
 #include "Game.h"
 
 
-Game::Game(RenderWindow * renderwindow) {
+Game::Game(RenderWindow * renderwindow) : Frame(renderwindow) {
 	m_renderWindow = renderwindow;
 	m_white = new HumanPlayer(Side::WHITE, m_renderWindow);
 	m_black = new HumanPlayer(Side::BLACK, m_renderWindow);
-	m_currentPlayer = m_white;
-	m_pieces = std::list<Piece*>();
 	m_animationState = false;
+	m_state = new GameState();
 
-	//Set up a starting board
-	//Pawns
-	for (int i = 0; i < 8; i++) {
-		Pawn* whitePawn = new Pawn(Side::WHITE);
-		whitePawn->initializeSprite();
-		whitePawn->setField(Field(i, 1));
-		m_pieces.push_back(whitePawn);
+	m_turnsThread = new std::thread(&Game::turnLoop, this);
+}
 
-		Pawn* blackPawn = new Pawn(Side::BLACK);
-		blackPawn->initializeSprite();
-		blackPawn->setField(Field(i, 6));
-		m_pieces.push_back(blackPawn);
-	}
-
-	//Kings
-	for (int i = 0; i < 2; i++) {
-		int y = i == 0 ? 0 : 7;
-		Side side = i == 0 ? Side::WHITE : Side::BLACK;
-		King* king = new King(side);
-		king->initializeSprite();
-		king->setField(Field(4, y));
-		m_pieces.push_back(king);
+void Game::turnLoop() {
+	Move* move;
+	while (true) {
+		m_state->setActiveSide(Side::WHITE);
+		move = m_white->requestMove(m_state);
+		m_state->applyMove(move);
+		m_state->setActiveSide(Side::BLACK);
+		move = m_black->requestMove(m_state);
+		m_state->applyMove(move);
 	}
 }
 
-void Game::update(double deltaTime) {
-	if (!m_animationState) {
+Player * Game::getActivePlayer()
+{
+	Side activeSide = m_state->getActiveSide();
+	return activeSide == Side::WHITE ? m_white : m_black;
+}
+
+void Game::update(float deltaTime) {
+	/*if (!m_animationState) {
 		Move* move = m_currentPlayer->requestMove(m_pieces);
 		if (move != nullptr) {
 			Vector2f startPosition = FieldUtils::fieldToCoord(move->getPiece()->getField());
@@ -57,7 +52,7 @@ void Game::update(double deltaTime) {
 		if (m_animation->hasFinished()) {
 			m_animationState = false;
 		}
-	}
+	}*/
 }
 
 template<typename Base, typename T>
@@ -85,14 +80,16 @@ void Game::draw() {
 	}
 
 	//Draw player objects
-	if (instanceof<HumanPlayer>(m_currentPlayer)) {
-		HumanPlayer* human = dynamic_cast<HumanPlayer*>(m_currentPlayer);
+	Player* activePlayer = getActivePlayer();
+	if (instanceof<HumanPlayer>(activePlayer)) {
+		HumanPlayer* human = dynamic_cast<HumanPlayer*>(activePlayer);
 		human->draw();
 	}
 
 	//Draw pieces
+	std::list<Piece*> pieces = m_state->getPieces();
 	std::list<Piece*>::iterator it;
-	for (it = m_pieces.begin(); it != m_pieces.end(); ++it) {
+	for (it = pieces.begin(); it != pieces.end(); ++it) {
 		Sprite* sprite = (*it)->getSprite();
 		if (!m_animationState) {
 			sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7 - (*it)->getField().y)*Piece::PIECE_SIZE);

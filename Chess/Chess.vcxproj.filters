@@ -13,46 +13,46 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Players">
-      <UniqueIdentifier>{678b93a7-3c90-4798-a3ef-e6bdbe6d8287}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Pieces">
-      <UniqueIdentifier>{90dbc5ff-d85c-4e71-833b-46d6daad7962}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{0a071562-21e2-44a8-90f0-a359af8c21ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{6f4567c6-89a6-4cd3-96f4-755f9c00e447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{10c35d34-c5a4-4f7e-933f-3aa706c56404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Pieces">
+      <UniqueIdentifier>{90dbc5ff-d85c-4e71-833b-46d6daad7962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Players">
+      <UniqueIdentifier>{678b93a7-3c90-4798-a3ef-e6bdbe6d8287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{30655cd4-a951-4589-bb5b-ac65c52bf531}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Source Files\Players</Filter>
+      <Filter>Source Files\Game\Players</Filter>
     </ClCompile>
     <ClCompile Include="HumanPlayer.cpp">
-      <Filter>Source Files\Players</Filter>
+      <Filter>Source Files\Game\Players</Filter>
     </ClCompile>
     <ClCompile Include="ComputerPlayer.cpp">
-      <Filter>Source Files\Players</Filter>
+      <Filter>Source Files\Game\Players</Filter>
     </ClCompile>
     <ClCompile Include="Piece.cpp">
-      <Filter>Source Files\Pieces</Filter>
-    </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Pieces</Filter>
     </ClCompile>
     <ClCompile Include="Pawn.cpp">
-      <Filter>Source Files\Pieces</Filter>
-    </ClCompile>
-    <ClCompile Include="Move.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Pieces</Filter>
     </ClCompile>
     <ClCompile Include="King.cpp">
-      <Filter>Source Files\Pieces</Filter>
+      <Filter>Source Files\Game\Pieces</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -60,8 +60,32 @@
     <ClCompile Include="Stoper.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="FieldUtils.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldUtils.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +126,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FieldUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

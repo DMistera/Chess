@@ -1,4 +1,5 @@
 #include "Piece.h"
+#include "GameState.h"
 
 
 Piece::Piece(Side side) {
@@ -16,7 +17,9 @@ void Piece::initializeSprite() {
 	m_sprite = new Sprite();
 	Texture* texture = new Texture();
 	std::string image = getImage();
-	texture->loadFromFile(image);
+	if (!texture->loadFromFile(image)) {
+		std::cout << "Failed to load " + image << std::endl;
+	}
 	m_sprite->setTexture(*texture);
 }
 
@@ -30,18 +33,4 @@ Side Piece::getSide() {
 
 Field Piece::getField() {
 	return m_field;
-}
-
-Piece * Piece::getPieceAtField(std::list<Piece*> pieces, Field field) {
-	for (std::list<Piece*>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
-		Piece* piece = (*it);
-		if (piece->getField().x == field.x && piece->getField().y == field.y) {
-			return piece;
-		}
-	}
-	return 0;
-}
-
-bool Piece::occupied(std::list<Piece*> pieces, Field field) {
-	return getPieceAtField(pieces, field) != 0;
 }

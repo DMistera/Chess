@@ -13,7 +13,7 @@ public:
 	~HumanPlayer();
 
 	// Inherited via Player
-	virtual Move* requestMove(std::list<Piece*> pieces) override;
+	virtual Move* requestMove(GameState* state) override;
 	void draw();
 private:
 	Piece * m_selectedPiece;

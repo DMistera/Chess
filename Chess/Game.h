@@ -8,22 +8,26 @@
 #include "Side.h"
 #include "Animation.h"
 #include <list>
+#include <thread>
+#include "GameState.h"
+#include "Frame.h"
 
 using namespace sf;
 
-class Game {
+class Game : public Frame {
 public:
 	Game(RenderWindow* renderwindow);
-	void update(double deltaTime);
-	void draw();
+	void update(float deltaTime) override;
+	void draw() override;
 private:
+	void turnLoop();
+	Player* getActivePlayer();
 	bool checkmate();
 	bool m_animationState;
-	RenderWindow* m_renderWindow;
 	Player* m_black;
 	Player* m_white;
-	std::list<Piece*> m_pieces;
-	Player* m_currentPlayer;
+	GameState* m_state;
 	Animation* m_animation;
+	std::thread* m_turnsThread;
 };
 

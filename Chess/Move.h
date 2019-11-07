@@ -8,8 +8,8 @@ class Move {
 public:
 	Move(Piece* piece, Field field);
 	~Move();
-	void execute(std::list<Piece*>* pieces);
 	Piece* getPiece();
+	Field getField();
 private:
 	Piece * m_piece;
 	Field m_field;

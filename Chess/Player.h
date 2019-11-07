@@ -4,10 +4,11 @@
 #include <list>
 #include "Side.h"
 #include "Move.h"
+#include "GameState.h"
 
 class Player {
 public:
-	virtual Move* requestMove(std::list<Piece*> pieces) = 0;
+	virtual Move* requestMove(GameState* state) = 0;
 	Player(Side white);
 	~Player();
 protected:

@@ -1,4 +1,5 @@
 #include "King.h"
+#include "GameState.h"
 
 
 
@@ -13,7 +14,7 @@ std::string King::getImage() {
 	return m_side == Side::WHITE ? "assets/whiteKing.png" : "assets/blackKing.png";
 }
 
-std::list<Field> King::getAvailableFields(std::list<Piece*> pieces) {
+std::list<Field> King::getAvailableFields(GameState* state) {
 	std::list<Field> result;
 	Field f[8];
 	f[0] = Field(m_field.x - 1, m_field.y - 1);
@@ -26,7 +27,7 @@ std::list<Field> King::getAvailableFields(std::list<Piece*> pieces) {
 	f[7] = Field(m_field.x + 1, m_field.y + 1);
 	for (int i = 0; i < 8; i++) {
 		if (f[i].x >= 0 && f[i].x <= 7 && f[i].y >= 0 && f[i].y <= 7) {
-			Piece* p = getPieceAtField(pieces, f[i]);
+			Piece* p = state->getPieceAtField(f[i]);
 			if (p == 0 || p->getSide() != m_side) {
 				result.push_back(f[i]);
 			}
