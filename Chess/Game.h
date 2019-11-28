@@ -16,12 +16,12 @@ using namespace sf;
 
 class Game : public Frame {
 public:
-	Game(RenderWindow* renderwindow);
+	Game();
 	void update(float deltaTime) override;
-	void draw() override;
+	virtual void draw(RenderTarget & target, RenderStates states) const override;
 private:
 	void turnLoop();
-	Player* getActivePlayer();
+	Player* getActivePlayer() const;
 	bool checkmate();
 	bool m_animationState;
 	Player* m_black;

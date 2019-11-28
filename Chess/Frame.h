@@ -5,14 +5,11 @@
 
 using namespace sf;
 
-class Frame
+class Frame : public Drawable
 {
 public:
-	Frame(RenderWindow*);
+	Frame();
 	~Frame();
 	virtual void update(float deltaTime) = 0;
-	virtual void draw() = 0;
-protected:
-	RenderWindow* m_renderWindow;
 };
 

@@ -6,18 +6,17 @@
 #include "SFML\Window.hpp"
 #include <list>
 
-class HumanPlayer : public Player {
+#include "AppConsts.h"
+
+class HumanPlayer : public Player, public Drawable {
 public:
 
-	HumanPlayer(Side side, RenderWindow* renderWindow);
+	HumanPlayer(Side side);
 	~HumanPlayer();
-
-	// Inherited via Player
 	virtual Move* requestMove(GameState* state) override;
-	void draw();
+	virtual void draw(RenderTarget & target, RenderStates states) const override;
 private:
 	Piece * m_selectedPiece;
-	RenderWindow* m_renderWindow;
 	bool m_clicked;
 	std::list<Field> m_availableMoves;
 

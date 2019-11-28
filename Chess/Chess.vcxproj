@@ -134,11 +134,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AppConsts.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldUtils.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -147,18 +149,22 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Move.cpp" />
+    <ClCompile Include="OnlinePlayer.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ServerConnection.cpp" />
     <ClCompile Include="Stoper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AppConsts.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ComputerPlayer.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldUtils.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
@@ -166,9 +172,12 @@
     <ClInclude Include="King.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Move.h" />
+    <ClInclude Include="OnlinePlayer.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ServerConnection.h" />
     <ClInclude Include="Side.h" />
     <ClInclude Include="Stoper.h" />
   </ItemGroup>

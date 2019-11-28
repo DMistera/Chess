@@ -2,16 +2,23 @@
 
 
 
-Application::Application(RenderWindow * renderwindow) : Frame(renderwindow)
+Application::Application() 
 {
-	m_menu = new Menu(renderwindow);
-	m_game = new Game(renderwindow);
+	m_serverConnection = new ServerConnection();
+	m_serverConnection->init();
+	m_menu = new Menu(m_serverConnection);
 	m_activeFrame = m_menu;
+
+	m_menu->onPlayOnline([=]() {
+		m_game = new Game();
+		m_activeFrame = m_game;
+	});
 }
 
 
 Application::~Application()
 {
+	delete m_serverConnection;
 }
 
 void Application::update(float deltaTime)
@@ -19,7 +26,8 @@ void Application::update(float deltaTime)
 	m_activeFrame->update(deltaTime);
 }
 
-void Application::draw()
+void Application::draw(RenderTarget & target, RenderStates states) const
 {
-	m_activeFrame->draw();
+	target.draw(*m_activeFrame);
 }
+

@@ -1,5 +1,8 @@
 #pragma once
 #include "Frame.h"
+#include "FontManager.h"
+#include <functional>
+#include "AppConsts.h"
 
 using namespace sf;
 
@@ -7,13 +10,18 @@ class Button :
 	public Frame
 {
 public:
-	Button(RenderWindow* window, Vector2f pos);
+	Button(Vector2f scale, Vector2f pos, String label);
 	~Button();
-
-	// Inherited via Frame
+	void setCallback(std::function<void()> callback);
 	virtual void update(float deltaTime) override;
-	virtual void draw() override;
+	virtual void draw(RenderTarget & target, RenderStates states) const override;
 private:
+	bool pointInside(Vector2i p);
 	Vector2f m_position;
+	Vector2f m_scale;
+	Text* m_text;
+	RectangleShape* m_rect;
+	std::function<void()> m_callback;
+	bool m_clicked;
 };
 

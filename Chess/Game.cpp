@@ -1,10 +1,9 @@
 #include "Game.h"
 
 
-Game::Game(RenderWindow * renderwindow) : Frame(renderwindow) {
-	m_renderWindow = renderwindow;
-	m_white = new HumanPlayer(Side::WHITE, m_renderWindow);
-	m_black = new HumanPlayer(Side::BLACK, m_renderWindow);
+Game::Game() {
+	m_white = new HumanPlayer(Side::WHITE);
+	m_black = new HumanPlayer(Side::BLACK);
 	m_animationState = false;
 	m_state = new GameState();
 
@@ -23,7 +22,7 @@ void Game::turnLoop() {
 	}
 }
 
-Player * Game::getActivePlayer()
+Player * Game::getActivePlayer() const
 {
 	Side activeSide = m_state->getActiveSide();
 	return activeSide == Side::WHITE ? m_white : m_black;
@@ -60,7 +59,7 @@ inline bool instanceof(const T *ptr) {
 	return dynamic_cast<const Base*>(ptr) != nullptr;
 }
 
-void Game::draw() {
+void Game::draw(RenderTarget & target, RenderStates states) const {
 
 	//Draw chessboard
 	for (int x = 0; x < 8; x++) {
@@ -74,7 +73,7 @@ void Game::draw() {
 			else {
 				square->setFillColor(Color(231, 231, 198));
 			}
-			m_renderWindow->draw(*square);
+			target.draw(*square);
 			delete square;
 		}
 	}
@@ -83,7 +82,7 @@ void Game::draw() {
 	Player* activePlayer = getActivePlayer();
 	if (instanceof<HumanPlayer>(activePlayer)) {
 		HumanPlayer* human = dynamic_cast<HumanPlayer*>(activePlayer);
-		human->draw();
+		target.draw(*human);
 	}
 
 	//Draw pieces
@@ -94,7 +93,7 @@ void Game::draw() {
 		if (!m_animationState) {
 			sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7 - (*it)->getField().y)*Piece::PIECE_SIZE);
 		}
-		m_renderWindow->draw(*sprite);
+		target.draw(*sprite);
 	}
 }
 

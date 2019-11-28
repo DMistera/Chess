@@ -2,9 +2,8 @@
 
 
 
-Frame::Frame(RenderWindow * renderwindow)
+Frame::Frame()
 {
-	m_renderWindow = renderwindow;
 }
 
 

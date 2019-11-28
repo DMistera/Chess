@@ -4,14 +4,14 @@
 #include <SFML\Window.hpp>
 #include "Application.h"
 #include "Stoper.h"
-
+#include "AppConsts.h"
 #include <iostream>
 
 int main() {
 	std::cout << "Start!\n";
 	unsigned int windowSize = Piece::PIECE_SIZE * 8;
-	sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Chess");
-	Application application(&window);
+	sf::RenderWindow& window = AppConsts::RENDER_WINDOW;
+	Application application;
 	Stoper stoper;
 	double deltaTime = 0;
 	while (window.isOpen()) {
@@ -23,7 +23,7 @@ int main() {
 				window.close();
 		}
 		window.clear();
-		application.draw();
+		window.draw(application);
 		window.display();
 		stoper.stop();
 		deltaTime = stoper.elapsedTime();
