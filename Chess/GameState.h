@@ -17,7 +17,9 @@ public:
 	bool occupied(Field field);
 	Side getActiveSide();
 	void setActiveSide(Side side);
+	Move* getLastMove();
 private:
+	Move* m_lastMove;
 	std::list<Piece*> m_pieces;
 	Side m_activeSide;
 };

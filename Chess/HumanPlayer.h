@@ -11,13 +11,14 @@
 class HumanPlayer : public Player, public Drawable {
 public:
 
-	HumanPlayer(Side side);
+	HumanPlayer(Side side, bool reversed);
 	~HumanPlayer();
 	virtual Move* requestMove(GameState* state) override;
 	virtual void draw(RenderTarget & target, RenderStates states) const override;
 private:
 	Piece * m_selectedPiece;
 	bool m_clicked;
+	bool m_reversed;
 	std::list<Field> m_availableMoves;
 
 	//Drawable

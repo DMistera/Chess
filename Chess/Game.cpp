@@ -2,12 +2,40 @@
 
 
 Game::Game() {
-	m_white = new HumanPlayer(Side::WHITE);
-	m_black = new HumanPlayer(Side::BLACK);
 	m_animationState = false;
 	m_state = new GameState();
 
-	m_turnsThread = new std::thread(&Game::turnLoop, this);
+	//Initialize chessboard
+	for (int x = 0; x < 8; x++) {
+		for (int y = 0; y < 8; y++) {
+			RectangleShape* square = new RectangleShape();
+			square->setPosition(x*Piece::PIECE_SIZE, y*Piece::PIECE_SIZE);
+			square->setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
+			if ((x + y) % 2 == 0) {
+				square->setFillColor(Color(74, 165, 74));
+			}
+			else {
+				square->setFillColor(Color(231, 231, 198));
+			}
+			m_chessBoard.push_back(square);
+		}
+	}
+
+	//Initalize exit button
+	m_exitButton = new Button(Vector2f(100.0f, 50.0f), Vector2f(AppConsts::getScreenWidth() - 75.0f, AppConsts::getScreenHeight() - 50.0f), "Exit");
+	m_exitButton->setCallback([&]() {
+		if (m_onExit) {
+			m_onExit();
+		}
+	});
+
+	//Initialize error text
+	m_errorText = new Text();
+	m_errorText->setFont(*FontManager::getDefaultFont());
+	m_errorText->setFillColor(Color::Red);
+	m_errorText->setCharacterSize(15);
+	m_errorText->setPosition(Vector2f(AppConsts::getScreenWidth() - 100.0f, 50.0f));
+	SpriteUtils::centerOrigin(m_errorText);
 }
 
 void Game::turnLoop() {
@@ -29,6 +57,9 @@ Player * Game::getActivePlayer() const
 }
 
 void Game::update(float deltaTime) {
+	if (m_exitable) {
+		m_exitButton->update(deltaTime);
+	}
 	/*if (!m_animationState) {
 		Move* move = m_currentPlayer->requestMove(m_pieces);
 		if (move != nullptr) {
@@ -62,20 +93,8 @@ inline bool instanceof(const T *ptr) {
 void Game::draw(RenderTarget & target, RenderStates states) const {
 
 	//Draw chessboard
-	for (int x = 0; x < 8; x++) {
-		for (int y = 0; y < 8; y++) {
-			RectangleShape* square = new RectangleShape();
-			square->setPosition(x*Piece::PIECE_SIZE, y*Piece::PIECE_SIZE);
-			square->setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
-			if ((x + y) % 2 == 0) {
-				square->setFillColor(Color(74, 165, 74));
-			}
-			else {
-				square->setFillColor(Color(231, 231, 198));
-			}
-			target.draw(*square);
-			delete square;
-		}
+	for (RectangleShape* rect : m_chessBoard) {
+		target.draw(*rect);
 	}
 
 	//Draw player objects
@@ -87,14 +106,41 @@ void Game::draw(RenderTarget & target, RenderStates states) const {
 
 	//Draw pieces
 	std::list<Piece*> pieces = m_state->getPieces();
-	std::list<Piece*>::iterator it;
-	for (it = pieces.begin(); it != pieces.end(); ++it) {
-		Sprite* sprite = (*it)->getSprite();
+	for (Piece* piece : pieces) {
+		Sprite* sprite = piece->getSprite();
 		if (!m_animationState) {
-			sprite->setPosition((*it)->getField().x*Piece::PIECE_SIZE, (7 - (*it)->getField().y)*Piece::PIECE_SIZE);
+			Field f = piece->getField();
+			if (m_reversed) {
+				f.reverse();
+			}
+			sprite->setPosition(f.x*Piece::PIECE_SIZE, (7 - f.y)*Piece::PIECE_SIZE);
 		}
 		target.draw(*sprite);
 	}
+
+	//Draw side panel
+	target.draw(*m_errorText);
+	if (m_exitable) {
+		target.draw(*m_exitButton);
+	}
+}
+
+void Game::initPlayers()
+{
+	m_white = createWhitePlayer();
+	m_black = createBlackPlayer();
+	m_turnsThread = new std::thread(&Game::turnLoop, this);
+}
+
+void Game::onExit(std::function<void()> f)
+{
+	m_onExit = f;
+}
+
+void Game::showError(String message)
+{
+	m_errorText->setString(message);
+	m_exitable = true;
 }
 
 bool Game::checkmate() {

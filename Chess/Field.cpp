@@ -13,3 +13,8 @@ Field::Field() {
 
 Field::~Field() {
 }
+
+void Field::reverse()
+{
+	y = 7 - y;
+}

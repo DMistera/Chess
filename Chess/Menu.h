@@ -9,7 +9,7 @@
 class Menu : public Frame
 {
 public:
-	Menu(ServerConnection*);
+	Menu();
 	~Menu();
 	void onPlayOnline(std::function<void()> f);
 	virtual void update(float deltaTime) override;
@@ -17,8 +17,5 @@ public:
 private:
 	Button* m_playOnlineButton;
 	std::function<void()> m_onPlayOnline;
-	ServerConnection* m_serverConnection;
-	Text* m_waitingForOpponentText;
-	bool m_waitingForOpponentTextVisible;
 };
 

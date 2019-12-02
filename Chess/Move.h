@@ -6,12 +6,12 @@
 
 class Move {
 public:
-	Move(Piece* piece, Field field);
+	Move(Field startField, Field endField);
 	~Move();
-	Piece* getPiece();
-	Field getField();
+	Field getStartField();
+	Field getEndField();
 private:
-	Piece * m_piece;
-	Field m_field;
+	Field m_startField;
+	Field m_endField;
 };
 

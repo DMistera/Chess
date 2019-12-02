@@ -38,11 +38,22 @@ GameState::~GameState()
 
 void GameState::applyMove(Move* move)
 {
-	Piece* p = getPieceAtField(move->getField());
-	if(p) {
-		m_pieces.remove(p);
+	if (move) {
+		Piece* target = getPieceAtField(move->getEndField());
+		if (target) {
+			m_pieces.remove(target);
+		}
+		Piece* p = getPieceAtField(move->getStartField());
+		p->setField(move->getEndField());
+
+		if (m_lastMove) {
+			delete m_lastMove;
+		}
+		m_lastMove = move;
 	}
-	move->getPiece()->setField(move->getField());
+	else {
+		std::cerr << "Move was null" << std::endl;
+	}
 }
 
 std::list<Piece*> GameState::getPieces()
@@ -74,4 +85,9 @@ Side GameState::getActiveSide()
 void GameState::setActiveSide(Side side)
 {
 	m_activeSide = side;
+}
+
+Move * GameState::getLastMove()
+{
+	return m_lastMove;
 }

@@ -12,6 +12,7 @@ public:
 	Field(int x, int y);
 	Field();
 	~Field();
+	void reverse();
 	int x;
 	int y;
 };

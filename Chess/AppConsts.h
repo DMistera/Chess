@@ -8,6 +8,8 @@ class AppConsts
 {
 public:
 	static RenderWindow RENDER_WINDOW;
+	static unsigned int getScreenWidth();
+	static unsigned int getScreenHeight();
 private:
 	AppConsts();
 };

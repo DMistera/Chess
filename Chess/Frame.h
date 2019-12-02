@@ -11,5 +11,6 @@ public:
 	Frame();
 	~Frame();
 	virtual void update(float deltaTime) = 0;
+
 };
 

@@ -2,8 +2,9 @@
 
 #include "Frame.h"
 #include "Menu.h"
-#include "Game.h"
+#include "OnlineGame.h"
 #include "ServerConnection.h"
+#include "WaitingScreen.h"
 
 class Application : public Frame
 {

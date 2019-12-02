@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{2cf79a44-977f-4f80-8cec-64e5d4efc2c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Games">
+      <UniqueIdentifier>{d1db55b1-db65-45f8-87dd-ab8c20a92fd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -69,9 +72,6 @@
     <ClCompile Include="Frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -93,14 +93,26 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="AppConsts.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="ServerConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WaitingScreen.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="AppConsts.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="OnlinePlayer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game\Games</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineGame.cpp">
+      <Filter>Source Files\Game\Games</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +183,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OnlinePlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WaitingScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

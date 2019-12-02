@@ -3,19 +3,20 @@
 
 
 
-Move::Move(Piece * piece, Field field) {
-	m_piece = piece;
-	m_field = field;
+Move::Move(Field startField, Field endField) {
+	m_startField = startField;
+	m_endField = endField;
 }
 
 Move::~Move() {
 }
 
-Piece * Move::getPiece() {
-	return m_piece;
+Field Move::getStartField()
+{
+	return m_startField;
 }
 
-Field Move::getField()
+Field Move::getEndField()
 {
-	return m_field;
+	return m_endField;
 }

@@ -6,7 +6,7 @@ ServerConnection::ServerConnection()
 
 bool ServerConnection::init()
 {
-	const PCSTR availabeNodes[] = {"192.168.0.13", "10.160.41.22"};
+	const PCSTR availabeNodes[] = {"127.0.0.1", "10.160.41.22"};
 	
 	for (PCSTR addres : availabeNodes) {
 		if (tryToConnect(addres)) {
@@ -31,7 +31,6 @@ void ServerConnection::write(String msg)
 
 String ServerConnection::read()
 {
-	std::cout << "Reading!" << std::endl;
 	char receiveBuf[READ_BUF_LENGTH];
 	int iResult = recv(m_socket, receiveBuf, READ_BUF_LENGTH, 0);
 	std::cout << iResult << std::endl;
