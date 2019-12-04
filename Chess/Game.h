@@ -39,10 +39,10 @@ private:
 	Player* m_white;
 	Text* m_errorText;
 	Button* m_exitButton;
-	GameState* m_state;
+	GameState m_state;
 	Animation* m_animation;
 	std::thread* m_turnsThread;
-	std::list<RectangleShape*> m_chessBoard;
+	std::list<RectangleShape> m_chessBoard;
 	std::function<void()> m_onExit;
 };
 

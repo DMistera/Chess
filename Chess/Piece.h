@@ -13,17 +13,18 @@ class GameState;
 
 class Piece {
 public:
-	Piece(Side side);
+	Piece(Side side, Field field);
 	~Piece();
 	Sprite* getSprite();
 	virtual std::string getImage() = 0;
-	virtual std::list<Field> getAvailableFields(GameState* state) = 0;
+	virtual std::list<Field> getAvailableFields(GameState& state) = 0;
 	void initializeSprite();
 	void setField(Field field);
 	Side getSide();
 	Field getField();
 	static const unsigned int PIECE_SIZE = 50;
 protected:
+	void searchLine(std::list<Field>& list, GameState& state, int xf, int yf);
 	Sprite * m_sprite;
 	Side m_side;
 	Field m_field;

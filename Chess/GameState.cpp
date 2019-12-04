@@ -9,26 +9,34 @@ GameState::GameState()
 	//Set up a starting board
 	//Pawns
 	for (int i = 0; i < 8; i++) {
-		Pawn* whitePawn = new Pawn(Side::WHITE);
-		whitePawn->initializeSprite();
-		whitePawn->setField(Field(i, 1));
+		Pawn* whitePawn = new Pawn(Side::WHITE, i);
 		m_pieces.push_back(whitePawn);
 
-		Pawn* blackPawn = new Pawn(Side::BLACK);
-		blackPawn->initializeSprite();
-		blackPawn->setField(Field(i, 6));
+		Pawn* blackPawn = new Pawn(Side::BLACK, i);
 		m_pieces.push_back(blackPawn);
 	}
 
-	//Kings
+	//Rest of the peices
 	for (int i = 0; i < 2; i++) {
-		int y = i == 0 ? 0 : 7;
 		Side side = i == 0 ? Side::WHITE : Side::BLACK;
-		King* king = new King(side);
-		king->initializeSprite();
-		king->setField(Field(4, y));
-		m_pieces.push_back(king);
+		m_pieces.push_back(new King(side));
+		m_pieces.push_back(new Queen(side));
+		for (int x = 0; x < 8; x += 7) {
+			m_pieces.push_back(new Rook(side, x));
+		}
+		for (int x = 1; x < 7; x += 5) {
+			m_pieces.push_back(new Knight(side, x));
+		}
+		for (int x = 2; x < 6; x += 3) {
+			m_pieces.push_back(new Bishop(side, x));
+		}
 	}
+
+	//Initialize sprites
+	for (Piece* piece : m_pieces) {
+		piece->initializeSprite();
+	}
+
 }
 
 
@@ -56,7 +64,7 @@ void GameState::applyMove(Move* move)
 	}
 }
 
-std::list<Piece*> GameState::getPieces()
+std::list<Piece*> GameState::getPieces() const
 {
 	return m_pieces;
 }
@@ -77,7 +85,7 @@ bool GameState::occupied(Field field)
 	return getPieceAtField(field) != nullptr;
 }
 
-Side GameState::getActiveSide()
+Side GameState::getActiveSide() const
 {
 	return m_activeSide;
 }

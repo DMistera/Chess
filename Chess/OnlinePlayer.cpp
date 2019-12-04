@@ -13,10 +13,10 @@ OnlinePlayer::~OnlinePlayer()
 {
 }
 
-Move * OnlinePlayer::requestMove(GameState * state)
+Move * OnlinePlayer::requestMove(GameState& state)
 {
-	if (state->getLastMove()) {
-		m_connection->write(moveToString(state->getLastMove()));
+	if (state.getLastMove()) {
+		m_connection->write(moveToString(state.getLastMove()));
 	}
 	Move* result = stringToMove(m_connection->read());
 	if (!result) {

@@ -18,3 +18,8 @@ void Field::reverse()
 {
 	y = 7 - y;
 }
+
+bool Field::inBounds()
+{
+	return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+}

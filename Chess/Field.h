@@ -13,6 +13,7 @@ public:
 	Field();
 	~Field();
 	void reverse();
+	bool inBounds();
 	int x;
 	int y;
 };

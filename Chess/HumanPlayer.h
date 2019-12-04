@@ -13,7 +13,7 @@ public:
 
 	HumanPlayer(Side side, bool reversed);
 	~HumanPlayer();
-	virtual Move* requestMove(GameState* state) override;
+	virtual Move* requestMove(GameState& state) override;
 	virtual void draw(RenderTarget & target, RenderStates states) const override;
 private:
 	Piece * m_selectedPiece;

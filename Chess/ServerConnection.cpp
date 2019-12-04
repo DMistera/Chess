@@ -6,7 +6,7 @@ ServerConnection::ServerConnection()
 
 bool ServerConnection::init()
 {
-	const PCSTR availabeNodes[] = {"127.0.0.1", "10.160.41.22"};
+	const PCSTR availabeNodes[] = {"127.0.0.1"};
 	
 	for (PCSTR addres : availabeNodes) {
 		if (tryToConnect(addres)) {

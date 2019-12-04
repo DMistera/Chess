@@ -2,10 +2,11 @@
 
 #include "Piece.h"
 
-class Pawn : public Piece {
+class Rook : public Piece
+{
 public:
-	Pawn(Side side, int x);
-	~Pawn();
+	Rook(Side, int x);
+	~Rook();
 
 	// Inherited via Piece
 	virtual std::string getImage() override;

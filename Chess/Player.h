@@ -8,7 +8,7 @@
 
 class Player {
 public:
-	virtual Move* requestMove(GameState* state) = 0;
+	virtual Move* requestMove(GameState& state) = 0;
 	Player(Side white);
 	~Player();
 protected:

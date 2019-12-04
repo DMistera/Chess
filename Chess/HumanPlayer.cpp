@@ -14,9 +14,9 @@ HumanPlayer::~HumanPlayer() {
 }
 
 //TODO Cleanup
-Move* HumanPlayer::requestMove(GameState* state) {
+Move* HumanPlayer::requestMove(GameState& state) {
 	Move* result = nullptr;
-	std::list<Piece*> pieces = state->getPieces();
+	std::list<Piece*> pieces = state.getPieces();
 	while (!result) {
 		//Is mouse is not pressed, do not do anything
 		if (!Mouse::isButtonPressed(Mouse::Button::Left)) {
@@ -47,7 +47,7 @@ Move* HumanPlayer::requestMove(GameState* state) {
 				m_availableMovesShapes.clear();
 				if (m_availableMoves.size() != 0) {
 					for (Field f : m_availableMoves) {
-						if (!state->occupied(f)) {
+						if (!state.occupied(f)) {
 							if (m_reversed) {
 								f.reverse();
 							}

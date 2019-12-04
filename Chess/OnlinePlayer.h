@@ -9,7 +9,7 @@ class OnlinePlayer : public Player
 public:
 	OnlinePlayer(Side side, ServerConnection* connection, std::function<void(String)> onError);
 	~OnlinePlayer();
-	virtual Move * requestMove(GameState * state) override;
+	virtual Move * requestMove(GameState& state) override;
 private:
 	String moveToString(Move* move);
 	Move* stringToMove(String string);

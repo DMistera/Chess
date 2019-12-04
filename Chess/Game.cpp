@@ -3,19 +3,18 @@
 
 Game::Game() {
 	m_animationState = false;
-	m_state = new GameState();
 
 	//Initialize chessboard
 	for (int x = 0; x < 8; x++) {
 		for (int y = 0; y < 8; y++) {
-			RectangleShape* square = new RectangleShape();
-			square->setPosition(x*Piece::PIECE_SIZE, y*Piece::PIECE_SIZE);
-			square->setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
+			RectangleShape square;
+			square.setPosition(x*Piece::PIECE_SIZE, y*Piece::PIECE_SIZE);
+			square.setSize(Vector2f(Piece::PIECE_SIZE, Piece::PIECE_SIZE));
 			if ((x + y) % 2 == 0) {
-				square->setFillColor(Color(74, 165, 74));
+				square.setFillColor(Color(74, 165, 74));
 			}
 			else {
-				square->setFillColor(Color(231, 231, 198));
+				square.setFillColor(Color(231, 231, 198));
 			}
 			m_chessBoard.push_back(square);
 		}
@@ -41,18 +40,18 @@ Game::Game() {
 void Game::turnLoop() {
 	Move* move;
 	while (true) {
-		m_state->setActiveSide(Side::WHITE);
+		m_state.setActiveSide(Side::WHITE);
 		move = m_white->requestMove(m_state);
-		m_state->applyMove(move);
-		m_state->setActiveSide(Side::BLACK);
+		m_state.applyMove(move);
+		m_state.setActiveSide(Side::BLACK);
 		move = m_black->requestMove(m_state);
-		m_state->applyMove(move);
+		m_state.applyMove(move);
 	}
 }
 
 Player * Game::getActivePlayer() const
 {
-	Side activeSide = m_state->getActiveSide();
+	Side activeSide = m_state.getActiveSide();
 	return activeSide == Side::WHITE ? m_white : m_black;
 }
 
@@ -93,8 +92,8 @@ inline bool instanceof(const T *ptr) {
 void Game::draw(RenderTarget & target, RenderStates states) const {
 
 	//Draw chessboard
-	for (RectangleShape* rect : m_chessBoard) {
-		target.draw(*rect);
+	for (RectangleShape rect : m_chessBoard) {
+		target.draw(rect);
 	}
 
 	//Draw player objects
@@ -105,7 +104,7 @@ void Game::draw(RenderTarget & target, RenderStates states) const {
 	}
 
 	//Draw pieces
-	std::list<Piece*> pieces = m_state->getPieces();
+	std::list<Piece*> pieces = m_state.getPieces();
 	for (Piece* piece : pieces) {
 		Sprite* sprite = piece->getSprite();
 		if (!m_animationState) {
