@@ -5,6 +5,7 @@
 #include "OnlineGame.h"
 #include "ServerConnection.h"
 #include "WaitingScreen.h"
+#include "ConnectionScreen.h"
 
 class Application : public Frame
 {
@@ -13,8 +14,6 @@ public:
 	~Application();
 	virtual void update(float deltaTime) override;
 private:
-	Game* m_game;
-	Menu* m_menu;
 	Frame* m_activeFrame;
 	ServerConnection* m_serverConnection;
 	// Inherited via Frame

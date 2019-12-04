@@ -40,3 +40,23 @@ std::function<void(String)> OnlineGame::onlinePlayerErrorCallback()
 		showError(s);
 	};
 }
+
+String OnlineGame::whitePlayerMessage()
+{
+	if (m_localSide == Side::WHITE) {
+		return "Your turn!";
+	}
+	else {
+		return "Waiting for\n opponent...";
+	}
+}
+
+String OnlineGame::blackPlayerMessage()
+{
+	if (m_localSide == Side::BLACK) {
+		return "Your turn!";
+	}
+	else {
+		return "Waiting for\n opponent...";
+	}
+}

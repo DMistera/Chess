@@ -35,3 +35,8 @@ std::list<Field> King::getAvailableFields(GameState& state) {
 	}
 	return result;
 }
+
+Piece::Type King::getType()
+{
+	return Type::KING;
+}

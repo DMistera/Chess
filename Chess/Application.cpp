@@ -5,26 +5,30 @@
 Application::Application() 
 {
 	m_serverConnection = new ServerConnection();
-	m_serverConnection->init();
-	m_menu = new Menu();
-	m_activeFrame = m_menu;
 
-	m_menu->onPlayOnline([=]() {
-		WaitingScreen* waitingScreen = new WaitingScreen(m_serverConnection);
-		waitingScreen->onCancel([=]() {
-			m_activeFrame = m_menu;
-		});
-		waitingScreen->onOpponentFound([=](Side localSide) {
-			m_game = new OnlineGame(m_serverConnection, localSide);
-			m_game->initPlayers();
-			m_game->onExit([&]() {
-				m_activeFrame = m_menu;
-				//TODO Delete game here and terminate its thread somehow
+	ConnectionScreen* connectionScreen = new ConnectionScreen(m_serverConnection);
+	connectionScreen->onSuccess([&]() {
+		Menu* menu = new Menu();
+		m_activeFrame = menu;
+
+		menu->onPlayOnline([=]() {
+			WaitingScreen* waitingScreen = new WaitingScreen(m_serverConnection);
+			waitingScreen->onCancel([&]() {
+				m_activeFrame = menu;
 			});
-			m_activeFrame = m_game; 
+			waitingScreen->onOpponentFound([&](Side localSide) {
+				Game* game = new OnlineGame(m_serverConnection, localSide);
+				game->initPlayers();
+				game->onExit([&]() {
+					m_activeFrame = menu;
+					//TODO Delete game here and terminate its thread somehow
+				});
+				m_activeFrame = game;
+			});
+			m_activeFrame = waitingScreen;
 		});
-		m_activeFrame = waitingScreen;
 	});
+	m_activeFrame = connectionScreen;
 }
 
 

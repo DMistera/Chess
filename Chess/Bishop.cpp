@@ -25,3 +25,8 @@ std::list<Field> Bishop::getAvailableFields(GameState & state)
 	searchLine(result, state, 1, -1);
 	return result;
 }
+
+Piece::Type Bishop::getType()
+{
+	return Type::BISHOP;
+}

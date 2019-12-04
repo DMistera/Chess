@@ -13,10 +13,15 @@ class GameState;
 
 class Piece {
 public:
+	enum Type {
+		PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+	};
+
 	Piece(Side side, Field field);
 	~Piece();
 	Sprite* getSprite();
 	virtual std::string getImage() = 0;
+	virtual Type getType() = 0;
 	virtual std::list<Field> getAvailableFields(GameState& state) = 0;
 	void initializeSprite();
 	void setField(Field field);

@@ -38,3 +38,8 @@ std::list<Field> Knight::getAvailableFields(GameState & state)
 	}
 	return result;
 }
+
+Piece::Type Knight::getType()
+{
+	return Type::KNIGHT;
+}

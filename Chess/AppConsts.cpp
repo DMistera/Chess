@@ -1,6 +1,6 @@
 #include "AppConsts.h"
 
-RenderWindow AppConsts::RENDER_WINDOW(VideoMode(600, 400), "Chess");
+RenderWindow AppConsts::RENDER_WINDOW(VideoMode(400, 500), "Chess");
 
 unsigned int AppConsts::getScreenWidth()
 {

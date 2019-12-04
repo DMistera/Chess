@@ -31,21 +31,36 @@ Game::Game() {
 	//Initialize error text
 	m_errorText = new Text();
 	m_errorText->setFont(*FontManager::getDefaultFont());
-	m_errorText->setFillColor(Color::Red);
-	m_errorText->setCharacterSize(15);
-	m_errorText->setPosition(Vector2f(AppConsts::getScreenWidth() - 100.0f, 50.0f));
+	m_errorText->setCharacterSize(20);
+	m_errorText->setPosition(Vector2f(AppConsts::getScreenWidth()/2.0f - 100.0f, AppConsts::getScreenHeight() - 50.0f));
 	SpriteUtils::centerOrigin(m_errorText);
 }
 
 void Game::turnLoop() {
 	Move* move;
 	while (true) {
+		showMessage(whitePlayerMessage());
 		m_state.setActiveSide(Side::WHITE);
 		move = m_white->requestMove(m_state);
+		if (!move) {
+			break;
+		}
 		m_state.applyMove(move);
+		if (m_state.checkMate(Side::BLACK)) {
+			m_exitable = true;
+			break;
+		}
+		showMessage(blackPlayerMessage());
 		m_state.setActiveSide(Side::BLACK);
 		move = m_black->requestMove(m_state);
+		if (!move) {
+			break;
+		}
 		m_state.applyMove(move);
+		if (m_state.checkMate(Side::WHITE)) {
+			m_exitable = true;
+			break;
+		}
 	}
 }
 
@@ -138,11 +153,20 @@ void Game::onExit(std::function<void()> f)
 
 void Game::showError(String message)
 {
+	m_errorText->setFillColor(Color::Red);
 	m_errorText->setString(message);
+	SpriteUtils::centerOrigin(m_errorText);
 	m_exitable = true;
 }
 
-bool Game::checkmate() {
+void Game::showMessage(String message)
+{
+	m_errorText->setFillColor(Color::White);
+	m_errorText->setString(message);
+	SpriteUtils::centerOrigin(m_errorText);
+}
+
+bool Game::checkmate(Side side) {
 	return false;
 }
 

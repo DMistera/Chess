@@ -59,3 +59,8 @@ std::list<Field> Pawn::getAvailableFields(GameState& state) {
 	}
 	return fields;
 }
+
+Piece::Type Pawn::getType()
+{
+	return Type::PAWN;
+}

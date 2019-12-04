@@ -139,6 +139,7 @@
     <ClCompile Include="Bishop.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
+    <ClCompile Include="ConnectionScreen.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldUtils.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ComputerPlayer.h" />
+    <ClInclude Include="ConnectionScreen.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldUtils.h" />
     <ClInclude Include="FontManager.h" />

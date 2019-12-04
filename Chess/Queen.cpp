@@ -29,3 +29,8 @@ std::list<Field> Queen::getAvailableFields(GameState & state)
 	searchLine(result, state, 0, -1);
 	return result;
 }
+
+Piece::Type Queen::getType()
+{
+	return Type::QUEEN;
+}

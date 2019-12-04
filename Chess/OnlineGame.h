@@ -17,5 +17,9 @@ private:
 	virtual Player * createWhitePlayer() override;
 	virtual Player * createBlackPlayer() override;
 	std::function<void(String)> onlinePlayerErrorCallback();
+
+	// Inherited via Game
+	virtual String whitePlayerMessage() override;
+	virtual String blackPlayerMessage() override;
 };
 

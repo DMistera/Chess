@@ -25,13 +25,16 @@ public:
 	void onExit(std::function<void()>);
 protected:
 	void showError(String message);
+	void showMessage(String message);
 	bool m_reversed;
 	virtual Player* createWhitePlayer() = 0;
 	virtual Player* createBlackPlayer() = 0;
+	virtual String whitePlayerMessage() = 0;
+	virtual String blackPlayerMessage() = 0;
 private:
 	void turnLoop();
 	Player* getActivePlayer() const;
-	bool checkmate();
+	bool checkmate(Side side);
 
 	bool m_animationState;
 	bool m_exitable;

@@ -15,7 +15,6 @@ bool ServerConnection::init()
 		}
 	}
 	return false;
-
 }
 
 void ServerConnection::write(String msg)

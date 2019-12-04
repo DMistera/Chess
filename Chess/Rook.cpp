@@ -25,3 +25,8 @@ std::list<Field> Rook::getAvailableFields(GameState& state)
 	searchLine(result, state, 0, -1);
 	return result;
 }
+
+Piece::Type Rook::getType()
+{
+	return Type::ROOK;
+}

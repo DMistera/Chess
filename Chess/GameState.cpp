@@ -80,6 +80,16 @@ Piece * GameState::getPieceAtField(Field field)
 	return nullptr;
 }
 
+King * GameState::getKing(Side side)
+{
+	for (Piece* p : m_pieces) {
+		if (p->getSide() == side && p->getType() == Piece::Type::KING) {
+			return dynamic_cast<King*>(p);
+		}
+	}
+	return nullptr;
+}
+
 bool GameState::occupied(Field field)
 {
 	return getPieceAtField(field) != nullptr;
@@ -98,4 +108,9 @@ void GameState::setActiveSide(Side side)
 Move * GameState::getLastMove()
 {
 	return m_lastMove;
+}
+
+bool GameState::checkMate(Side side)
+{
+	return getKing(side) == nullptr;
 }
