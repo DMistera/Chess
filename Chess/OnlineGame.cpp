@@ -60,3 +60,10 @@ String OnlineGame::blackPlayerMessage()
 		return "Waiting for\n opponent...";
 	}
 }
+
+void OnlineGame::afterPlayerTurn(Side side)
+{
+	if (side == m_localSide) {
+		m_connection->write(m_state.getLastMove()->toString());
+	}
+}

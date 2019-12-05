@@ -20,7 +20,7 @@ class Game : public Frame {
 public:
 	Game();
 	void update(float deltaTime) override;
-	virtual void draw(RenderTarget & target, RenderStates states) const override;
+	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 	void initPlayers();
 	void onExit(std::function<void()>);
 protected:
@@ -31,16 +31,17 @@ protected:
 	virtual Player* createBlackPlayer() = 0;
 	virtual String whitePlayerMessage() = 0;
 	virtual String blackPlayerMessage() = 0;
-private:
+	virtual void afterPlayerTurn(Side side) = 0;
 	void turnLoop();
 	Player* getActivePlayer() const;
 	bool checkmate(Side side);
-
 	bool m_animationState;
 	bool m_exitable;
 	Player* m_black;
 	Player* m_white;
-	Text* m_errorText;
+	Text m_text;
+	String m_textString;
+	Color m_textColor;
 	Button* m_exitButton;
 	GameState m_state;
 	Animation* m_animation;

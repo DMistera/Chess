@@ -50,7 +50,7 @@ void Button::update(float deltaTime)
 	}
 }
 
-void Button::draw(RenderTarget & target, RenderStates states) const
+void Button::drawFrame(RenderTarget & target, RenderStates states) const
 {
 	target.draw(*m_rect);
 	target.draw(*m_text);

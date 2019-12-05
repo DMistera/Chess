@@ -2,8 +2,6 @@
 
 #include "Player.h"
 #include "ServerConnection.h"
-#include <sstream>
-
 class OnlinePlayer : public Player
 {
 public:
@@ -11,8 +9,6 @@ public:
 	~OnlinePlayer();
 	virtual Move * requestMove(GameState& state) override;
 private:
-	String moveToString(Move* move);
-	Move* stringToMove(String string);
 	ServerConnection* m_connection; 
 	std::function<void(String)> m_onError;
 };

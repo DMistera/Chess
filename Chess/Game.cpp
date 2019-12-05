@@ -29,11 +29,10 @@ Game::Game() {
 	});
 
 	//Initialize error text
-	m_errorText = new Text();
-	m_errorText->setFont(*FontManager::getDefaultFont());
-	m_errorText->setCharacterSize(20);
-	m_errorText->setPosition(Vector2f(AppConsts::getScreenWidth()/2.0f - 100.0f, AppConsts::getScreenHeight() - 50.0f));
-	SpriteUtils::centerOrigin(m_errorText);
+	m_text.setFont(*FontManager::getDefaultFont());
+	m_text.setCharacterSize(20);
+	m_text.setPosition(Vector2f(AppConsts::getScreenWidth()/2.0f - 100.0f, AppConsts::getScreenHeight() - 50.0f));
+	SpriteUtils::centerOrigin(&m_text);
 }
 
 void Game::turnLoop() {
@@ -46,7 +45,9 @@ void Game::turnLoop() {
 			break;
 		}
 		m_state.applyMove(move);
+		afterPlayerTurn(Side::WHITE);
 		if (m_state.checkMate(Side::BLACK)) {
+			showMessage("White won!");
 			m_exitable = true;
 			break;
 		}
@@ -57,7 +58,9 @@ void Game::turnLoop() {
 			break;
 		}
 		m_state.applyMove(move);
+		afterPlayerTurn(Side::BLACK);
 		if (m_state.checkMate(Side::WHITE)) {
+			showMessage("Black won!");
 			m_exitable = true;
 			break;
 		}
@@ -71,6 +74,9 @@ Player * Game::getActivePlayer() const
 }
 
 void Game::update(float deltaTime) {
+	m_text.setFillColor(m_textColor);
+	m_text.setString(m_textString);
+	SpriteUtils::centerOrigin(&m_text);
 	if (m_exitable) {
 		m_exitButton->update(deltaTime);
 	}
@@ -104,7 +110,7 @@ inline bool instanceof(const T *ptr) {
 	return dynamic_cast<const Base*>(ptr) != nullptr;
 }
 
-void Game::draw(RenderTarget & target, RenderStates states) const {
+void Game::drawFrame(RenderTarget & target, RenderStates states) const {
 
 	//Draw chessboard
 	for (RectangleShape rect : m_chessBoard) {
@@ -133,7 +139,7 @@ void Game::draw(RenderTarget & target, RenderStates states) const {
 	}
 
 	//Draw side panel
-	target.draw(*m_errorText);
+	target.draw(m_text);
 	if (m_exitable) {
 		target.draw(*m_exitButton);
 	}
@@ -153,17 +159,15 @@ void Game::onExit(std::function<void()> f)
 
 void Game::showError(String message)
 {
-	m_errorText->setFillColor(Color::Red);
-	m_errorText->setString(message);
-	SpriteUtils::centerOrigin(m_errorText);
+	m_textColor = Color::Red;
+	m_textString = message;
 	m_exitable = true;
 }
 
 void Game::showMessage(String message)
 {
-	m_errorText->setFillColor(Color::White);
-	m_errorText->setString(message);
-	SpriteUtils::centerOrigin(m_errorText);
+	m_textColor = Color::White;
+	m_textString = message;
 }
 
 bool Game::checkmate(Side side) {

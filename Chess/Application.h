@@ -14,9 +14,10 @@ public:
 	~Application();
 	virtual void update(float deltaTime) override;
 private:
+	void setActiveFrame(Frame* frame);
 	Frame* m_activeFrame;
 	ServerConnection* m_serverConnection;
 	// Inherited via Frame
-	virtual void draw(RenderTarget & target, RenderStates states) const override;
+	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 };
 

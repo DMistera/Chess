@@ -21,5 +21,6 @@ private:
 	// Inherited via Game
 	virtual String whitePlayerMessage() override;
 	virtual String blackPlayerMessage() override;
+	virtual void afterPlayerTurn(Side side) override;
 };
 

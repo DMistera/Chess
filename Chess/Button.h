@@ -14,7 +14,7 @@ public:
 	~Button();
 	void setCallback(std::function<void()> callback);
 	virtual void update(float deltaTime) override;
-	virtual void draw(RenderTarget & target, RenderStates states) const override;
+	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 private:
 	bool pointInside(Vector2i p);
 	Vector2f m_position;

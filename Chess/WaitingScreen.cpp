@@ -53,7 +53,7 @@ void WaitingScreen::onCancel(std::function<void()> f)
 	m_onCancel = f;
 }
 
-void WaitingScreen::draw(RenderTarget & target, RenderStates states) const
+void WaitingScreen::drawFrame(RenderTarget & target, RenderStates states) const
 {
 	target.draw(*m_waitingForOpponentText);
 	target.draw(*m_cancelButton);

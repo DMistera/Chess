@@ -9,26 +9,26 @@ Application::Application()
 	ConnectionScreen* connectionScreen = new ConnectionScreen(m_serverConnection);
 	connectionScreen->onSuccess([&]() {
 		Menu* menu = new Menu();
-		m_activeFrame = menu;
+		setActiveFrame(menu);
 
 		menu->onPlayOnline([=]() {
 			WaitingScreen* waitingScreen = new WaitingScreen(m_serverConnection);
 			waitingScreen->onCancel([&]() {
-				m_activeFrame = menu;
+				setActiveFrame(menu);
 			});
 			waitingScreen->onOpponentFound([&](Side localSide) {
 				Game* game = new OnlineGame(m_serverConnection, localSide);
 				game->initPlayers();
 				game->onExit([&]() {
-					m_activeFrame = menu;
+					setActiveFrame(menu);
 					//TODO Delete game here and terminate its thread somehow
 				});
-				m_activeFrame = game;
+				setActiveFrame(game);
 			});
-			m_activeFrame = waitingScreen;
+			setActiveFrame(waitingScreen);
 		});
 	});
-	m_activeFrame = connectionScreen;
+	setActiveFrame(connectionScreen);
 }
 
 
@@ -42,7 +42,13 @@ void Application::update(float deltaTime)
 	m_activeFrame->update(deltaTime);
 }
 
-void Application::draw(RenderTarget & target, RenderStates states) const
+void Application::setActiveFrame(Frame * frame)
+{
+	m_activeFrame = frame;
+
+}
+
+void Application::drawFrame(RenderTarget & target, RenderStates states) const
 {
 	target.draw(*m_activeFrame);
 }

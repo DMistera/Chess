@@ -26,7 +26,7 @@ void Menu::update(float deltaTime)
 	m_playOnlineButton->update(deltaTime);
 }
 
-void Menu::draw(RenderTarget & target, RenderStates states) const
+void Menu::drawFrame(RenderTarget & target, RenderStates states) const
 {
 	target.draw(*m_playOnlineButton);
 }

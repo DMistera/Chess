@@ -2,6 +2,7 @@
 
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
+#include <iostream>
 
 using namespace sf;
 
@@ -11,6 +12,8 @@ public:
 	Frame();
 	~Frame();
 	virtual void update(float deltaTime) = 0;
-
+	virtual void drawFrame(RenderTarget & target, RenderStates states) const = 0;
+	virtual void draw(RenderTarget & target, RenderStates states) const override;
+private:
 };
 

@@ -22,7 +22,7 @@ private:
 	Button* m_cancelButton;
 
 	// Inherited via Frame
-	virtual void draw(RenderTarget & target, RenderStates states) const override;
+	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 	virtual void update(float deltaTime) override;
 };
 
