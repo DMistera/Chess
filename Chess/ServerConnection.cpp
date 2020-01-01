@@ -1,18 +1,15 @@
 #include "ServerConnection.h"
 
-ServerConnection::ServerConnection()
+ServerConnection::ServerConnection(String node)
 {
+	m_node = node;
 }
 
 bool ServerConnection::init()
 {
-	const PCSTR availabeNodes[] = {"127.0.0.1"};
-	
-	for (PCSTR addres : availabeNodes) {
-		if (tryToConnect(addres)) {
-			std::cout << "Connected to " << addres << std::endl;
-			return true;
-		}
+	if (tryToConnect(m_node.toAnsiString().c_str())) {
+		std::cout << "Connected to " << m_node.toAnsiString() << std::endl;
+		return true;
 	}
 	return false;
 }

@@ -28,5 +28,6 @@ void Menu::update(float deltaTime)
 
 void Menu::drawFrame(RenderTarget & target, RenderStates states) const
 {
+	BackgroundScreen::drawFrame(target, states);
 	target.draw(*m_playOnlineButton);
 }

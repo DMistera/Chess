@@ -9,7 +9,7 @@ WaitingScreen::WaitingScreen(ServerConnection* connection)
 	m_waitingForOpponentText->setString("Waiting for an opponent...");
 	m_waitingForOpponentText->setPosition(Vector2f(AppConsts::getScreenWidth()/2.0f, 50.0f));
 	m_waitingForOpponentText->setFillColor(Color::White);
-	SpriteUtils::centerOrigin(m_waitingForOpponentText);
+	SpriteUtils::centerOrigin(*m_waitingForOpponentText);
 
 	m_cancelButton = new Button(Vector2f(200, 50), Vector2f(AppConsts::getScreenWidth() / 2.0f, 150.0f), "Cancel");
 	m_cancelButton->setCallback([=]() {
@@ -55,6 +55,7 @@ void WaitingScreen::onCancel(std::function<void()> f)
 
 void WaitingScreen::drawFrame(RenderTarget & target, RenderStates states) const
 {
+	BackgroundScreen::drawFrame(target, states);
 	target.draw(*m_waitingForOpponentText);
 	target.draw(*m_cancelButton);
 }

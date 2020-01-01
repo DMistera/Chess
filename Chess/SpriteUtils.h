@@ -9,7 +9,8 @@ class SpriteUtils
 public:
 	SpriteUtils();
 	~SpriteUtils();
-	static void centerOrigin(Sprite* sprite);
-	static void centerOrigin(Text* text);
+	static void centerOrigin(Sprite& sprite);
+	static void centerOrigin(Text& text);
+	static void centerOrigin(Shape& shape);
 };
 

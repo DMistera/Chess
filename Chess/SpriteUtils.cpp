@@ -11,14 +11,20 @@ SpriteUtils::~SpriteUtils()
 {
 }
 
-void SpriteUtils::centerOrigin(Sprite * sprite)
+void SpriteUtils::centerOrigin(Sprite& sprite)
 {
-	FloatRect bounds = sprite->getLocalBounds();
-	sprite->setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+	FloatRect bounds = sprite.getLocalBounds();
+	sprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 }
 
-void SpriteUtils::centerOrigin(Text * text)
+void SpriteUtils::centerOrigin(Text& text)
 {
-	FloatRect bounds = text->getLocalBounds();
-	text->setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+	FloatRect bounds = text.getLocalBounds();
+	text.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+}
+
+void SpriteUtils::centerOrigin(Shape & shape)
+{
+	FloatRect bounds = shape.getLocalBounds();
+	shape.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
 }

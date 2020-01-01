@@ -1,30 +1,34 @@
 #include "Button.h"
 
-Button::Button( Vector2f scale, Vector2f pos, String label)
+Texture* Button::m_texture = nullptr;
+
+Button::Button( Vector2f scale, Vector2f pos, String label) :
+	m_rect(scale)
 {
 	m_scale = scale;
 	m_position = pos;
 
-	m_text = new Text();
-	m_text->setString(label);
-	Font* font = FontManager::getDefaultFont();
-	m_text->setFont(*font);
-	m_text->setPosition(m_position);
-	m_text->setFillColor(Color(0, 0, 0));
-	//Center text
-	FloatRect textBounds = m_text->getLocalBounds();
-	m_text->setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
+	m_text.setString(label);
+	m_text.setFont(*FontManager::getDefaultFont());
+	m_text.setPosition(m_position - Vector2f(0.0f, 5.0f));
+	m_text.setFillColor(Color(0, 0, 0));
+	SpriteUtils::centerOrigin(m_text);
+	m_rect.setPosition(m_position);
 
-	m_rect = new RectangleShape(m_scale);
-	m_rect->setPosition(m_position);
-	m_rect->setOrigin(scale.x / 2.0f, scale.y / 2.0f);
+	if (m_texture == nullptr) {
+		m_texture = new Texture();
+		if (!m_texture->loadFromFile("assets/button.png")) {
+			std::cerr << "Failed to load button texture!" << std::endl;
+		}
+	}
+
+	m_rect.setTexture(m_texture);
+	SpriteUtils::centerOrigin(m_rect);
 }
 
 
 Button::~Button()
 {
-	delete m_text;
-	delete m_rect;
 }
 
 void Button::setCallback(std::function<void()> callback)
@@ -52,8 +56,8 @@ void Button::update(float deltaTime)
 
 void Button::drawFrame(RenderTarget & target, RenderStates states) const
 {
-	target.draw(*m_rect);
-	target.draw(*m_text);
+	target.draw(m_rect);
+	target.draw(m_text);
 }
 
 bool Button::pointInside(Vector2i p)

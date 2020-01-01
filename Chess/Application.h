@@ -6,17 +6,24 @@
 #include "ServerConnection.h"
 #include "WaitingScreen.h"
 #include "ConnectionScreen.h"
+#include "ServerInputScreen.h"
 
 class Application : public Frame
 {
 public:
 	Application();
 	~Application();
-	virtual void update(float deltaTime) override;
 private:
 	void setActiveFrame(Frame* frame);
-	Frame* m_activeFrame;
+
+	ServerInputScreen* m_serverInputScreen;
+	ConnectionScreen* m_connectionScreen;
+	Menu* m_menu;
+	WaitingScreen* m_waitingScreen;
+	Game* m_game;
 	ServerConnection* m_serverConnection;
+
+	Frame* m_activeFrame;
 	// Inherited via Frame
 	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 };

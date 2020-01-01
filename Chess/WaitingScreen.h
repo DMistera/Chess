@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Frame.h"
+#include "BackgroundScreen.h"
 #include "Button.h"
 #include "ServerConnection.h"
 #include <functional>
@@ -8,7 +8,7 @@
 #include "Side.h"
 
 class WaitingScreen :
-	public Frame
+	public BackgroundScreen
 {
 public:
 	WaitingScreen(ServerConnection*);

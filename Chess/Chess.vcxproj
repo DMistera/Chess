@@ -136,6 +136,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AppConsts.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BackgroundScreen.cpp" />
     <ClCompile Include="Bishop.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
@@ -160,14 +161,17 @@
     <ClCompile Include="Queen.cpp" />
     <ClCompile Include="Rook.cpp" />
     <ClCompile Include="ServerConnection.cpp" />
+    <ClCompile Include="ServerInputScreen.cpp" />
     <ClCompile Include="SpriteUtils.cpp" />
     <ClCompile Include="Stoper.cpp" />
+    <ClCompile Include="TextField.cpp" />
     <ClCompile Include="WaitingScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AppConsts.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BackgroundScreen.h" />
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ComputerPlayer.h" />
@@ -192,9 +196,11 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Rook.h" />
     <ClInclude Include="ServerConnection.h" />
+    <ClInclude Include="ServerInputScreen.h" />
     <ClInclude Include="Side.h" />
     <ClInclude Include="SpriteUtils.h" />
     <ClInclude Include="Stoper.h" />
+    <ClInclude Include="TextField.h" />
     <ClInclude Include="WaitingScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

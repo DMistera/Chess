@@ -11,6 +11,7 @@ int main() {
 	std::cout << "Start!\n";
 	unsigned int windowSize = Piece::PIECE_SIZE * 8;
 	sf::RenderWindow& window = AppConsts::RENDER_WINDOW;
+	window.setFramerateLimit(60);
 	Application application;
 	Stoper stoper;
 	double deltaTime = 0;
@@ -18,9 +19,10 @@ int main() {
 		stoper.start();
 		application.update(deltaTime);
 		sf::Event event;
-		while (window.pollEvent(event)) {
+		if (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
+			application.handleEvent(event);
 		}
 		window.clear();
 		window.draw(application);

@@ -11,9 +11,11 @@ class Frame : public Drawable
 public:
 	Frame();
 	~Frame();
-	virtual void update(float deltaTime) = 0;
+	virtual void update(float deltaTime);
 	virtual void drawFrame(RenderTarget & target, RenderStates states) const = 0;
+	virtual void handleEvent(Event event);
 	virtual void draw(RenderTarget & target, RenderStates states) const override;
-private:
+protected:
+	std::vector<Frame*> m_subframes;
 };
 

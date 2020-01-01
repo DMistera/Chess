@@ -32,7 +32,7 @@ Game::Game() {
 	m_text.setFont(*FontManager::getDefaultFont());
 	m_text.setCharacterSize(20);
 	m_text.setPosition(Vector2f(AppConsts::getScreenWidth()/2.0f - 100.0f, AppConsts::getScreenHeight() - 50.0f));
-	SpriteUtils::centerOrigin(&m_text);
+	SpriteUtils::centerOrigin(m_text);
 }
 
 void Game::turnLoop() {
@@ -76,7 +76,7 @@ Player * Game::getActivePlayer() const
 void Game::update(float deltaTime) {
 	m_text.setFillColor(m_textColor);
 	m_text.setString(m_textString);
-	SpriteUtils::centerOrigin(&m_text);
+	SpriteUtils::centerOrigin(m_text);
 	if (m_exitable) {
 		m_exitButton->update(deltaTime);
 	}

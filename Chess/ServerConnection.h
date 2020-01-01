@@ -19,7 +19,7 @@ using namespace sf;
 class ServerConnection
 {
 public:
-	ServerConnection();
+	ServerConnection(String node);
 	~ServerConnection();
 	bool init();
 	void write(String msg);
@@ -31,5 +31,6 @@ private:
 	SOCKET m_socket;
 	static const int READ_BUF_LENGTH = 5;
 	std::thread* m_readThread;
+	String m_node;
 };
 

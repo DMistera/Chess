@@ -4,48 +4,51 @@
 
 Application::Application() 
 {
-	m_serverConnection = new ServerConnection();
+	m_serverInputScreen = new ServerInputScreen();
+	m_serverInputScreen->onAccept([&](String node) {
+		m_serverConnection = new ServerConnection(node);
+		m_connectionScreen = new ConnectionScreen(m_serverConnection);
+		m_connectionScreen->onSuccess([&]() {
+			m_menu = new Menu();
+			setActiveFrame(m_menu);
 
-	ConnectionScreen* connectionScreen = new ConnectionScreen(m_serverConnection);
-	connectionScreen->onSuccess([&]() {
-		Menu* menu = new Menu();
-		setActiveFrame(menu);
-
-		menu->onPlayOnline([=]() {
-			WaitingScreen* waitingScreen = new WaitingScreen(m_serverConnection);
-			waitingScreen->onCancel([&]() {
-				setActiveFrame(menu);
-			});
-			waitingScreen->onOpponentFound([&](Side localSide) {
-				Game* game = new OnlineGame(m_serverConnection, localSide);
-				game->initPlayers();
-				game->onExit([&]() {
-					setActiveFrame(menu);
-					//TODO Delete game here and terminate its thread somehow
+			m_menu->onPlayOnline([&]() {
+				m_waitingScreen = new WaitingScreen(m_serverConnection);
+				m_waitingScreen->onCancel([&]() {
+					setActiveFrame(m_menu);
 				});
-				setActiveFrame(game);
+				m_waitingScreen->onOpponentFound([&](Side localSide) {
+					m_game = new OnlineGame(m_serverConnection, localSide);
+					m_game->initPlayers();
+					m_game->onExit([&]() {
+						setActiveFrame(m_menu);
+						//TODO Delete game here and terminate its thread somehow
+					});
+					setActiveFrame(m_game);
+				});
+				setActiveFrame(m_waitingScreen);
 			});
-			setActiveFrame(waitingScreen);
 		});
+		m_connectionScreen->onBack([&]() {
+			setActiveFrame(m_serverInputScreen);
+		});
+		setActiveFrame(m_connectionScreen);
 	});
-	setActiveFrame(connectionScreen);
+	setActiveFrame(m_serverInputScreen);
 }
 
 
 Application::~Application()
 {
-	delete m_serverConnection;
-}
-
-void Application::update(float deltaTime)
-{
-	m_activeFrame->update(deltaTime);
 }
 
 void Application::setActiveFrame(Frame * frame)
 {
 	m_activeFrame = frame;
-
+	if (m_subframes.size() > 0) {
+		m_subframes.pop_back();
+	}
+	m_subframes.push_back(m_activeFrame);
 }
 
 void Application::drawFrame(RenderTarget & target, RenderStates states) const

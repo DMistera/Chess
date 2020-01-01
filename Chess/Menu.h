@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Frame.h"
+#include "BackgroundScreen.h"
 #include "Button.h"
 #include <functional>
 #include "ServerConnection.h"
 #include "FontManager.h"
 
-class Menu : public Frame
+class Menu : public BackgroundScreen
 {
 public:
 	Menu();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Frame.h"
+#include "BackgroundScreen.h"
 #include "AppConsts.h"
 #include "SpriteUtils.h"
 #include "ServerConnection.h"
@@ -10,7 +10,7 @@
 #include "Button.h"
 
 class ConnectionScreen :
-	public Frame
+	public BackgroundScreen
 {
 public:
 	ConnectionScreen(ServerConnection* serverConnection);
@@ -18,8 +18,10 @@ public:
 	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;
 	virtual void update(float deltaTime) override;
 	void onSuccess(std::function<void()> f);
+	void onBack(std::function<void()> f);
 private:
 	std::function<void()> m_onSuccess;
+	std::function<void()> m_onBack;
 	std::thread* m_connectThread;
 	Text m_text;
 	ServerConnection* m_connection;
@@ -27,5 +29,6 @@ private:
 	bool m_success;
 	bool m_fail;
 	Button m_reconnectButton;
+	Button m_backButton;
 };
 
