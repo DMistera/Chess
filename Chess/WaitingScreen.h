@@ -20,6 +20,7 @@ private:
 	std::function<void()> m_onCancel;
 	Text* m_waitingForOpponentText;
 	Button* m_cancelButton;
+	int m_readCallbackIndex;
 
 	// Inherited via Frame
 	virtual void drawFrame(RenderTarget & target, RenderStates states) const override;

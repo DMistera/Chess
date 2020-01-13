@@ -138,6 +138,9 @@
     <ClCompile Include="BackgroundScreen.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="LocalGame.cpp">
+      <Filter>Source Files\Game\Games</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -240,6 +243,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

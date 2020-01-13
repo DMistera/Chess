@@ -3,6 +3,7 @@
 #include "Frame.h"
 #include "Menu.h"
 #include "OnlineGame.h"
+#include "LocalGame.h"
 #include "ServerConnection.h"
 #include "WaitingScreen.h"
 #include "ConnectionScreen.h"

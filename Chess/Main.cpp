@@ -30,6 +30,5 @@ int main() {
 		stoper.stop();
 		deltaTime = stoper.elapsedTime();
 	}
-
 	return 0;
 }

@@ -13,11 +13,12 @@ WaitingScreen::WaitingScreen(ServerConnection* connection)
 
 	m_cancelButton = new Button(Vector2f(200, 50), Vector2f(AppConsts::getScreenWidth() / 2.0f, 150.0f), "Cancel");
 	m_cancelButton->setCallback([=]() {
+		connection->unreadAsync(m_readCallbackIndex);
 		connection->write("C");
 		m_onCancel();
 	});
 
-	connection->readAsync([=](String msg) {
+	m_readCallbackIndex = connection->readAsync([=](String msg) {
 		if (msg[0] == 'A') {
 			char sideID = msg[1];
 			Side localSide;
@@ -35,6 +36,7 @@ WaitingScreen::WaitingScreen(ServerConnection* connection)
 			}
 		}
 	});
+
 	connection->write("R");
 }
 

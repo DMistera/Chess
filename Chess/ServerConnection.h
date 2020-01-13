@@ -14,6 +14,8 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
+#include <vector>
+
 using namespace sf;
 
 class ServerConnection
@@ -23,14 +25,18 @@ public:
 	~ServerConnection();
 	bool init();
 	void write(String msg);
-	String read();
-	void readAsync(std::function<void(String)> callback);
+	int readAsync(std::function<void(String)> callback);
+	void unreadAsync(int index);
+	String readSync();
 private:
+	void read();
 	bool tryToConnect(PCSTR addres);
-	void readAsyncThread(std::function<void(String)> callback);
+	void readAsyncThread();
 	SOCKET m_socket;
 	static const int READ_BUF_LENGTH = 5;
 	std::thread* m_readThread;
 	String m_node;
+	bool m_readyWait;
+	std::vector<std::function<void(String)>> m_callbacks;
 };
 

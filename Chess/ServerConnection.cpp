@@ -25,22 +25,48 @@ void ServerConnection::write(String msg)
 	}
 }
 
-String ServerConnection::read()
+void ServerConnection::read()
 {
 	char receiveBuf[READ_BUF_LENGTH];
+	m_readyWait = true;
+	std::cout << "Reading" << std::endl;
 	int iResult = recv(m_socket, receiveBuf, READ_BUF_LENGTH, 0);
+	m_readyWait = false;
 	std::cout << iResult << std::endl;
 	if (iResult < 0)
 		std::cerr << "Receive failed, error code " << WSAGetLastError() << std::endl;
 	else if (iResult == 0)
 		std::cerr << "Connection closed" <<  std::endl;
 	std::cout << "Message received: " << String(receiveBuf).toAnsiString() << std::endl;
-	return String(receiveBuf);
+	String result = String(receiveBuf);
+	for (auto callback : m_callbacks) {
+		callback(result);
+	}
+	m_callbacks.clear();
 }
 
-void ServerConnection::readAsync(std::function<void(String)> callback)
+int ServerConnection::readAsync(std::function<void(String)> callback)
 {
-	m_readThread = new std::thread(&ServerConnection::readAsyncThread, this, callback);
+	m_callbacks.push_back(callback);
+	if (!m_readyWait) {
+		m_readThread = new std::thread(&ServerConnection::readAsyncThread, this);
+	}
+	return m_callbacks.size() - 1;
+}
+
+void ServerConnection::unreadAsync(int index)
+{
+	m_callbacks.erase(m_callbacks.begin() + index);
+}
+
+String ServerConnection::readSync()
+{
+	String result = "";
+	readAsync([&](String r) {
+		result = r;
+	});
+	while (result.toAnsiString().length() == 0);
+	return result;
 }
 
 bool ServerConnection::tryToConnect(PCSTR addres)
@@ -95,9 +121,9 @@ bool ServerConnection::tryToConnect(PCSTR addres)
 	return true;
 }
 
-void ServerConnection::readAsyncThread(std::function<void(String)> callback)
+void ServerConnection::readAsyncThread()
 {
-	callback(read());
+	read();
 }
 
 

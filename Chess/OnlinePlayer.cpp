@@ -16,7 +16,7 @@ OnlinePlayer::~OnlinePlayer()
 Move * OnlinePlayer::requestMove(GameState& state)
 {
 	try {
-		return new Move(m_connection->read());
+		return new Move(m_connection->readSync());
 	}
 	catch (std::exception e) {
 		m_onError("Opponent \ndisconnected!");

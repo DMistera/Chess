@@ -45,8 +45,8 @@ void Button::update(float deltaTime)
 				if (m_callback) {
 					m_callback();
 				}
-				m_clicked = true;
 			}
+			m_clicked = true;
 		}
 	}
 	else {

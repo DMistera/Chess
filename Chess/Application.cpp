@@ -22,11 +22,19 @@ Application::Application()
 					m_game->initPlayers();
 					m_game->onExit([&]() {
 						setActiveFrame(m_menu);
-						//TODO Delete game here and terminate its thread somehow
 					});
 					setActiveFrame(m_game);
 				});
 				setActiveFrame(m_waitingScreen);
+			});
+
+			m_menu->onPlayLocally([&]() {
+				m_game = new LocalGame();
+				m_game->initPlayers();
+				m_game->onExit([&]() {
+					setActiveFrame(m_menu);
+				});
+				setActiveFrame(m_game);
 			});
 		});
 		m_connectionScreen->onBack([&]() {

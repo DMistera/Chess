@@ -36,6 +36,7 @@ Game::Game() {
 }
 
 void Game::turnLoop() {
+	std::cout << "Turn loop" << std::endl;
 	Move* move;
 	while (true) {
 		showMessage(whitePlayerMessage());

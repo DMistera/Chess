@@ -150,6 +150,7 @@
     <ClCompile Include="HumanPlayer.cpp" />
     <ClCompile Include="King.cpp" />
     <ClCompile Include="Knight.cpp" />
+    <ClCompile Include="LocalGame.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Move.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
+    <ClInclude Include="LocalGame.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="OnlineGame.h" />
